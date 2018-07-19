@@ -34,6 +34,7 @@ func newFuncMap() map[string]interface{} {
 	m["replace"] = strings.Replace
 	m["trimSuffix"] = strings.TrimSuffix
 	m["lookupIP"] = LookupIP
+	m["listCIDR"] = ListCIDR
 	m["lookupIPV4"] = LookupIPV4
 	m["lookupIPV6"] = LookupIPV6
 	m["lookupSRV"] = LookupSRV
@@ -104,6 +105,30 @@ func (s byLength) Less(i, j int) bool {
 func SortByLength(values []string) []string {
 	sort.Sort(byLength(values))
 	return values
+}
+
+func inc(ip net.IP) {
+	for j := len(ip) - 1; j >= 0; j-- {
+		ip[j]++
+		if ip[j] > 0 {
+			break
+		}
+	}
+}
+
+//Returns all the IPs in a CIDR range
+func ListCIDR(cidr string) ([]string, error) {
+	ip, ipnet, err := net.ParseCIDR(cidr)
+	if err != nil {
+		return nil, err
+	}
+
+	var ips []string
+	for ip := ip.Mask(ipnet.Mask); ipnet.Contains(ip); inc(ip) {
+		ips = append(ips, ip.String())
+	}
+	// remove network address and broadcast address
+	return ips[1 : len(ips)-1], nil
 }
 
 //Reverse returns the array in reversed order
