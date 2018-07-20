@@ -1,6 +1,6 @@
 # confd
 
-[![Build Status](https://travis-ci.org/kelseyhightower/confd.svg?branch=master)](https://travis-ci.org/kelseyhightower/confd)
+[![Build Status](https://travis-ci.org/jinxmcg/confd.svg?branch=master)](https://travis-ci.org/jinxmcg/confd)
 
 `confd` is a lightweight configuration management tool focused on:
 
@@ -21,8 +21,8 @@ Go 1.10 is required to build confd, which uses the new vendor directory.
 
 ```
 $ mkdir -p $GOPATH/src/github.com/kelseyhightower
-$ git clone https://github.com/kelseyhightower/confd.git $GOPATH/src/github.com/kelseyhightower/confd
-$ cd $GOPATH/src/github.com/kelseyhightower/confd
+$ git clone https://github.com/jinxmcg/confd.git $GOPATH/src/github.com/jinxmcg/confd
+$ cd $GOPATH/src/github.com/jinxmcg/confd
 $ make
 ```
 
