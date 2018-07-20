@@ -117,18 +117,18 @@ func inc(ip net.IP) {
 }
 
 //Returns all the IPs in a CIDR range
-func ListCIDR(cidr string) ([]string, error) {
+func ListCIDR(cidr string) ([]string, string, error) {
 	ip, ipnet, err := net.ParseCIDR(cidr)
 	if err != nil {
-		return nil, err
+		return nil, "", err
 	}
 
 	var ips []string
 	for ip := ip.Mask(ipnet.Mask); ipnet.Contains(ip); inc(ip) {
 		ips = append(ips, ip.String())
 	}
-	// remove network address and broadcast address
-	return ips[1 : len(ips)-1], nil
+	// remove network address and broadcast address, but return broadcast too
+	return ips[1 : len(ips)-1], ips[len(ips)], nil
 }
 
 //Reverse returns the array in reversed order
